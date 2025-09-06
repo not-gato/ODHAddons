@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>How To Make ODH Plugins</title>
+<style>
+:root{
+  --bg1:#0b0f14;
+  --bg2:#101820;
+  --bg3:#0d141f;
+  --muted:#9fb0c6;
+  --text:#e9f0ff;
+  --brand:#6ea8ff;
+  --brand-2:#9b7bff;
+  --accent:#66ffc4;
+  --radius:18px;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+}
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial;
+  color:var(--text);
+  background: linear-gradient(160deg, var(--bg1), var(--bg2) 60%, var(--bg3));
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+a{ color:var(--brand); text-decoration:none; }
+a:hover{text-decoration:underline;}
+.site-header{ position:sticky; top:0; z-index:50; backdrop-filter:blur(10px); background:rgba(11,15,20,.8); border-bottom:1px solid rgba(255,255,255,.06); }
+.wrap{ max-width:1100px; margin:0 auto; padding:0 20px; }
+.nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+.brand{ display:flex; align-items:center; gap:12px; font-weight:700; }
+.brand img.logo{ width:32px; height:32px; border-radius:8px; box-shadow:var(--shadow); object-fit:cover; }
+.nav a.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:rgba(110,168,255,.15); border:1px solid rgba(255,255,255,.08); transition:background .2s ease; color:var(--text); }
+.nav a.btn:hover{ background:rgba(110,168,255,.3); }
+.hero{ padding:64px 0 40px; text-align:center; }
+.h1{ font-size:clamp(28px,5vw,46px); margin:18px auto 12px; line-height:1.12; font-weight:800; }
+.h1 .gradient { background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color: transparent; color:transparent; }
+.sub{ max-width:720px; margin:0 auto 24px; color:var(--muted); font-size:16px; word-break:normal; }
+.section{ padding:56px 0; }
+.section h2{ font-size:clamp(22px,4vw,32px); margin:0 0 18px; color:var(--text); }
+.card{ background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:24px; }
+.card h3{ margin:0 0 12px; font-size:20px; }
+.card p{ margin:8px 0; line-height:1.5; }
+.card a{ color:var(--brand); text-decoration:none; }
+.card a:hover{text-decoration:underline;}
+footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav">
+      <div class="brand">
+        <img class="logo" src="https://github.com/not-gato/ODHAddons/raw/refs/heads/main/Files/Logo.png" alt="ODH Logo">
+        <div>ODH Plugins</div>
+      </div>
+      <div>
+        <a href="#howtomake" class="btn">How To Make</a>
+        <a href="#howtouse" class="btn">How To Use</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="howtomake" class="section">
+    <h2>How To Do Overdrive H Plugins?</h2>
+    <p class="sub">This will show you a <strong><em>Step-By-Step</em></strong> tutorial on how to make an Overdrive H plugin!</p>
+    <div class="card">
+      <h3>Step-by-Step Guide</h3>
+      <p>1. Join the **Discord Server**: <a href="https://discord.gg/overdrivehub" target="_blank" rel="noopener"><em>Discord Server</em></a></p>
+      <p>2. Buy **Premium** or **Exclusive** at <a href="https://discord.com/channels/1364032023819190322/1364133583534424104" target="_blank" rel="noopener"><em>Buy</em></a></p>
+      <p>3. Go to the <a href="https://discord.com/channels/1364032023819190322/1409029337172410509" target="_blank" rel="noopener"><em>Addons</em></a> channel, and go to <a href="https://discord.com/channels/1364032023819190322/1409031382973550612" target="_blank" rel="noopener"><em>How To Use</em></a> post made by **! Kaguya** and download the file.</p>
+      <p>4. Open the file and you will see how to import the global variable and make stuff like buttons, toggles, dropdowns, etc.</p>
+      <p>5. After you have learned how to use it, just make a <code>.lua</code> file in <code>/Ixry Shizuka/Plugins</code> and execute **Overdrive H**.</p>
+    </div>
+  </section>
+
+  <section id="howtouse" class="section" style="display:none;">
+    <h2>How To Use Plugins</h2>
+    <p class="sub">This section will guide you on using your Overdrive H plugins. (Content can be added later)</p>
+  </section>
+</main>
+
+<footer>
+  Music by <a href="https://pixabay.com/users/delosound-46524562/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener">DELOSound</a> from
+  <a href="https://pixabay.com/music/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener">Pixabay</a>
+</footer>
+
+<script>
+function showSection(hash){
+  const make = document.getElementById('howtomake');
+  const use = document.getElementById('howtouse');
+  if(hash === '#howtouse'){
+    make.style.display = 'none';
+    use.style.display = 'block';
+  }else{
+    make.style.display = 'block';
+    use.style.display = 'none';
+  }
+}
+
+// initial load
+showSection(window.location.hash);
+
+// handle hash change
+window.addEventListener('hashchange', () => {
+  showSection(window.location.hash);
+});
+</script>
+</body>
+</html>
