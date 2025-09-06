@@ -1,162 +1,299 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ODH Plugins</title>
   <style>
-    :root {
-      --bg1: #0b0f14;
-      --bg2: #101820;
-      --bg3: #0d141f;
-      --muted: #9fb0c6;
-      --text: #e9f0ff;
-      --brand: #6ea8ff;
-      --brand-2: #9b7bff;
-      --accent: #66ffc4;
-      --radius: 18px;
-      --shadow: 0 10px 30px rgba(0,0,0,.45);
+    :root{
+      --bg1:#0b0f14;
+      --bg2:#101820;
+      --bg3:#0d141f;
+      --muted:#9fb0c6;
+      --text:#e9f0ff;
+      --brand:#6ea8ff;
+      --brand-2:#9b7bff;
+      --accent:#66ffc4;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.45);
     }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
-      color: var(--text);
+
+    /* page base */
+    html,body{
+      margin:0;
+      padding:0;
+      height:100%;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial;
+      color:var(--text);
       background: linear-gradient(160deg, var(--bg1), var(--bg2) 60%, var(--bg3));
-      min-height: 100vh;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
-    a { color: var(--brand); text-decoration: none; }
-    a:hover { text-decoration: underline; }.site-header {
-  position: sticky; top: 0; z-index: 50;
-  backdrop-filter: blur(10px);
-  background: rgba(11,15,20,.8);
-  border-bottom: 1px solid rgba(255,255,255,.06);
-}
-.wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-.brand { display: flex; align-items: center; gap: 12px; font-weight: 700; }
-.brand .logo { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow); display: grid; place-items: center; color: #0b0f14; font-size: 16px; font-weight: 800; }
-.nav a.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; background: rgba(110,168,255,.15); border: 1px solid rgba(255,255,255,.08); transition: background .2s ease; }
-.nav a.btn:hover { background: rgba(110,168,255,.3); }
 
-.hero { padding: 64px 0 40px; text-align: center; }
-.h1 { font-size: clamp(28px, 5vw, 46px); margin: 18px auto 12px; line-height: 1.12; font-weight: 800; }
-.sub { max-width: 720px; margin: 0 auto; color: var(--muted); font-size: 16px; }
-.down { margin-top: 36px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: linear-gradient(135deg, rgba(102,255,196,.15), rgba(110,168,255,.15)); border: 1px solid rgba(255,255,255,.08); }
+    a{ color:var(--brand); text-decoration:none; }
+    a:hover{text-decoration:underline;}
 
-.section { padding: 56px 0; }
-.section h2 { font-size: clamp(22px, 4vw, 32px); margin: 0 0 18px; }
-.grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
-.card { grid-column: span 12; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
-@media (min-width: 720px) { .card { grid-column: span 6; } }
-@media (min-width: 1040px) { .card { grid-column: span 4; } }
-.card h3 { margin: 0; font-size: 18px; }
-.badge { font-size: 12px; color: var(--muted); border: 1px dashed rgba(255,255,255,.15); padding: 2px 8px; border-radius: 999px; align-self: flex-start; }
-.code { background: #0e1420; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 10px; font-family: ui-monospace, monospace; font-size: 12.5px; overflow: auto; word-break: break-all; }
-.row { display: flex; gap: 10px; flex-wrap: wrap; }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08); background: #0f1520; text-decoration: none; color: var(--text); cursor: pointer; transition: transform .1s ease; }
-.btn:hover { transform: translateY(-1px); }
-.btn.primary { background: rgba(110,168,255,.25); }
-.btn.success { background: rgba(102,255,196,.18); }
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(10px);
+      background:rgba(11,15,20,.8);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
 
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 18px; padding: 10px 14px; border-radius: 999px; background: #0f1520; border: 1px solid rgba(255,255,255,.1); box-shadow: var(--shadow); display: none; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:0 20px; }
 
+    .nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:700; }
+    .brand img.logo{ width:32px; height:32px; border-radius:8px; box-shadow:var(--shadow); object-fit:cover; }
+
+    .nav a.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:rgba(110,168,255,.15); border:1px solid rgba(255,255,255,.08); transition:background .2s ease; color:var(--text); }
+    .nav a.btn:hover{ background:rgba(110,168,255,.3); }
+
+    .hero{ padding:64px 0 40px; text-align:center; }
+    .h1{ font-size:clamp(28px,5vw,46px); margin:18px auto 12px; line-height:1.12; font-weight:800; }
+    .sub{ max-width:720px; margin:0 auto; color:var(--muted); font-size:16px; }
+    .down{ margin-top:36px; display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; background: linear-gradient(135deg, rgba(102,255,196,.15), rgba(110,168,255,.15)); border:1px solid rgba(255,255,255,.08); color:var(--text); }
+
+    .section{ padding:56px 0; }
+    .section h2{ font-size:clamp(22px,4vw,32px); margin:0 0 18px; color:var(--text); }
+    .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:18px; }
+    .card{ grid-column:span 12; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; display:flex; flex-direction:column; gap:14px; }
+    @media(min-width:720px){ .card{ grid-column:span 6; } }
+    @media(min-width:1040px){ .card{ grid-column:span 4; } }
+
+    .card h3{ margin:0; font-size:18px; }
+    .badge{ font-size:12px; color:var(--muted); border:1px dashed rgba(255,255,255,.15); padding:2px 8px; border-radius:999px; align-self:flex-start; }
+    .credit{ font-size:13px; color:var(--muted); }
+    .code{ background:#0e1420; border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:10px; font-family:ui-monospace,monospace; font-size:12.5px; overflow:auto; word-break:break-all; color:var(--text); }
+
+    .row{ display:flex; gap:10px; flex-wrap:wrap; }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0f1520; color:var(--text); cursor:pointer; transition:transform .1s ease; }
+    .btn:hover{ transform:translateY(-1px); }
+    .btn.primary{ background:rgba(110,168,255,.25); }
+    .btn.success{ background:rgba(102,255,196,.18); }
+
+    .toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:18px; padding:10px 14px; border-radius:999px; background:#0f1520; border:1px solid rgba(255,255,255,.1); box-shadow:var(--shadow); display:none; color:var(--text); }
+
+    footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); }
+
+    /* Floating Music Player */
+    .music-popup{
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:rgba(15,21,32,0.95);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.4);
+      padding:12px 16px;
+      z-index:9999;
+      width:280px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .music-header{ display:flex; justify-content:space-between; align-items:center; font-size:14px; color:var(--muted); margin-bottom:6px; }
+    .close-btn{ background:transparent; border:none; color:var(--text); font-size:18px; cursor:pointer; }
+    .close-btn:hover{ color:var(--accent); }
+    .music-popup audio{ width:100%; }
+
+    /* reopen button */
+    #music-reopen{ position:fixed; bottom:20px; right:20px; display:none; z-index:9998; }
+    #music-reopen button{ border-radius:999px; padding:10px 12px; border:1px solid rgba(255,255,255,.08); background:rgba(15,21,32,0.95); color:var(--text); cursor:pointer; box-shadow:var(--shadow); }
+
+    /* small responsive tweaks */
+    @media(max-width:440px){
+      .music-popup{ width:92%; left:4%; right:4%; bottom:14px; }
+      #music-reopen{ right:12px; bottom:12px; }
+    }
   </style>
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header" role="banner">
     <div class="wrap">
-      <nav class="nav">
+      <nav class="nav" role="navigation" aria-label="Main">
         <div class="brand">
-          <div class="logo">O</div>
+          <img class="logo" src="https://github.com/not-gato/ODHAddons/raw/refs/heads/main/Files/Logo.png" alt="ODH Logo">
           <div>ODH Plugins</div>
         </div>
-        <a href="#plugins" class="btn">Plugins</a>
+        <a href="#plugins" class="btn" aria-label="Go to plugins">Plugins</a>
       </nav>
     </div>
-  </header>  <main>
-    <section class="hero wrap">
-      <h1 class="h1">Your curated hub for <span style="background: linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent;">ODH Plugins</span></h1>
-      <p class="sub">Scroll Down To Find All Featured Addons, Copy And Import Then Into Overdrive H.</p>
+  </header>
+
+  <main>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="h1">Your Trusted Website For <span style="background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent;">Overdrive H Plugins</span></h1>
+      <p class="sub">Safe And Verified. Scroll down to find all featured addons — copy the URL or download and import into Overdrive H.</p>
       <p><a class="down" href="#plugins" title="Scroll to Plugins">↓ View Plugins</a></p>
-    </section><section id="plugins" class="section">
-  <div class="wrap">
-    <h2>Plugins</h2>
-    <div class="grid">
-      <article class="card">
-        <h3>Better ODH</h3>
-        <span class="badge">Raw GitHub</span>
-        <pre class="code" id="code-better-odh">https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua</pre>
-        <div class="row">
-          <a class="btn primary" href="https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua" target="_blank" rel="noopener">Open Raw</a>
-          <button class="btn success" onclick="copyToClipboard('code-better-odh')">Copy URL</button>
-          <button class="btn" onclick="downloadFile('Better ODH Auto Updater.lua', 'https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua')">Download</button>
-        </div>
-      </article>
+    </section>
 
-      <article class="card">
-        <h3>Gato's Addon Pack</h3>
-        <span class="badge">Raw GitHub</span>
-        <pre class="code" id="code-gato">https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh</pre>
-        <div class="row">
-          <a class="btn primary" href="https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh" target="_blank" rel="noopener">Open Raw</a>
-          <button class="btn success" onclick="copyToClipboard('code-gato')">Copy URL</button>
-          <button class="btn" onclick="downloadFile('Gato Addon Pack.canimport.odh', 'https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh')">Download</button>
-        </div>
-      </article>
+    <section id="plugins" class="section" aria-labelledby="plugins-title">
+      <div class="wrap">
+        <h2 id="plugins-title">Plugins</h2>
+        <div class="grid">
 
-      <article class="card">
-        <h3>Addon Pack</h3>
-        <span class="badge">Raw GitHub</span>
-        <pre class="code" id="code-aux">https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute</pre>
-        <div class="row">
-          <a class="btn primary" href="https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute" target="_blank" rel="noopener">Open Raw</a>
-          <button class="btn success" onclick="copyToClipboard('code-aux')">Copy URL</button>
-          <button class="btn" onclick="downloadFile('Addon Pack - Execute', 'https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute')">Download</button>
+          <!-- Better ODH -->
+          <article class="card" aria-labelledby="better-title">
+            <h3 id="better-title">Better ODH</h3>
+            <span class="badge">Raw GitHub</span>
+            <pre class="code" id="code-better">https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua</pre>
+            <div class="row">
+              <button class="btn success" aria-label="Copy Better ODH URL" title="Copy URL" onclick="copyToClipboard('https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua')">Copy URL</button>
+              <button class="btn" aria-label="Download Better ODH" title="Download" onclick="downloadFile('Better ODH Auto Updater.lua','https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua')">Download</button>
+            </div>
+            <p class="credit">Made by <strong>b6o6s</strong></p>
+          </article>
+
+          <!-- Gato's Addon Pack -->
+          <article class="card" aria-labelledby="gato-title">
+            <h3 id="gato-title">Gato's Addon Pack</h3>
+            <span class="badge">Raw GitHub</span>
+            <pre class="code" id="code-gato">https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh</pre>
+            <div class="row">
+              <button class="btn success" aria-label="Copy Gato Addon Pack URL" title="Copy URL" onclick="copyToClipboard('https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh')">Copy URL</button>
+              <button class="btn" aria-label="Download Gato Addon Pack" title="Download" onclick="downloadFile('Gato Addon Pack.canimport.odh','https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh')">Download</button>
+            </div>
+            <p class="credit">Made by <strong>not_.gato</strong></p>
+          </article>
+
+          <!-- Addon Pack -->
+          <article class="card" aria-labelledby="addon-title">
+            <h3 id="addon-title">Addon Pack</h3>
+            <span class="badge">Raw GitHub</span>
+            <pre class="code" id="code-aux">https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute</pre>
+            <div class="row">
+              <button class="btn success" aria-label="Copy Addon Pack URL" title="Copy URL" onclick="copyToClipboard('https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute')">Copy URL</button>
+              <button class="btn" aria-label="Download Addon Pack" title="Download" onclick="downloadFile('Addon Pack - Execute','https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute')">Download</button>
+            </div>
+            <p class="credit">Made by <strong>lzzzx</strong></p>
+          </article>
+
         </div>
-      </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Music Player -->
+  <div id="music-popup" class="music-popup" role="region" aria-label="Music player">
+    <div class="music-header">
+      <span>🎵 Now Playing</span>
+      <button class="close-btn" onclick="hideMusicPopup()" aria-label="Close music popup">×</button>
     </div>
-  </div>
-</section>
 
-  </main>  <div id="toast" class="toast" role="status" aria-live="polite"></div>  <script>
-    function showToast(msg) {
+    <!-- audio element stays in DOM when popup is hidden so sound keeps running -->
+    <audio id="bg-music" controls autoplay loop muted>
+      <source src="https://github.com/not-gato/ODHAddons/raw/refs/heads/main/Files/lofi-lofi-song-music-398288.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <!-- Reopen button (visible after user closes the popup) -->
+  <div id="music-reopen" aria-hidden="true">
+    <button onclick="showMusicPopup()" aria-label="Open music player">🎵</button>
+  </div>
+
+  <footer>
+    Music by <a href="https://pixabay.com/users/delosound-46524562/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener">DELOSound</a> from
+    <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener"> Pixabay</a>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Toast helper
+    function showToast(msg){
       const t = document.getElementById('toast');
       t.textContent = msg;
       t.style.display = 'inline-flex';
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2200);
+      window.__toastTimer = setTimeout(()=>{ t.style.display='none'; }, 2000);
     }
 
-    function copyToClipboard(codeId) {
-      const el = document.getElementById(codeId);
-      const text = el?.textContent?.trim();
-      if (!text) return;
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => showToast('Copied URL')); 
-      } else {
+    // Copy helper: accepts text (url)
+    async function copyToClipboard(text){
+      if(!text) return showToast('Nothing to copy');
+      // Try modern clipboard API first
+      if(navigator.clipboard && window.isSecureContext){
+        try{
+          await navigator.clipboard.writeText(text);
+          return showToast('Copied URL');
+        }catch(e){
+          // fallback to textarea method
+        }
+      }
+      try{
         const ta = document.createElement('textarea');
-        ta.value = text; document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); showToast('Copied URL'); } catch(e) { showToast('Copy failed'); }
-        ta.remove();
+        ta.value = text;
+        ta.setAttribute('readonly','');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('Copied URL');
+      }catch(err){
+        showToast('Copy failed — opening link');
+        window.open(text, '_blank', 'noopener');
       }
     }
 
-    async function downloadFile(filename, url) {
-      try {
-        const res = await fetch(url, { mode: 'cors' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
+    // Download helper: fetch and create blob, fallback to opening link
+    async function downloadFile(filename, url){
+      try{
+        const res = await fetch(url, { mode:'cors' });
+        if(!res.ok) throw new Error('HTTP ' + res.status);
         const blob = await res.blob();
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = filename || 'download';
-        document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(()=>URL.revokeObjectURL(a.href), 1500);
         showToast('Download started');
-      } catch (err) {
+      }catch(err){
         window.open(url, '_blank', 'noopener');
         showToast('Opened raw file');
       }
     }
-  </script></body>
+
+    // Music popup controls
+    function hideMusicPopup(){
+      const popup = document.getElementById('music-popup');
+      popup.style.display = 'none';
+      const reopen = document.getElementById('music-reopen');
+      reopen.style.display = 'block';
+      reopen.setAttribute('aria-hidden', 'false');
+      // audio element remains in DOM and will continue playing
+    }
+
+    function showMusicPopup(){
+      const popup = document.getElementById('music-popup');
+      popup.style.display = 'flex';
+      const reopen = document.getElementById('music-reopen');
+      reopen.style.display = 'none';
+      reopen.setAttribute('aria-hidden', 'true');
+    }
+
+    // Unmute on first user gesture (browsers require interaction to play with sound)
+    document.addEventListener('click', ()=> {
+      const audio = document.getElementById('bg-music');
+      if(audio && audio.muted){
+        audio.muted = false;
+        audio.play().catch(()=>{ /* ignore playback errors */ });
+      }
+    }, { once: true });
+
+    // Show error toast if audio fails to load
+    const bgAudio = document.getElementById('bg-music');
+    if(bgAudio){
+      bgAudio.addEventListener('error', ()=>{ showToast('Audio failed to load'); });
+    }
+  </script>
+</body>
 </html>
