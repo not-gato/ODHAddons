@@ -1,0 +1,162 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ODH Plugins</title>
+  <style>
+    :root {
+      --bg1: #0b0f14;
+      --bg2: #101820;
+      --bg3: #0d141f;
+      --muted: #9fb0c6;
+      --text: #e9f0ff;
+      --brand: #6ea8ff;
+      --brand-2: #9b7bff;
+      --accent: #66ffc4;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+    }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+      color: var(--text);
+      background: linear-gradient(160deg, var(--bg1), var(--bg2) 60%, var(--bg3));
+      min-height: 100vh;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }.site-header {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(10px);
+  background: rgba(11,15,20,.8);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+.brand .logo { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow); display: grid; place-items: center; color: #0b0f14; font-size: 16px; font-weight: 800; }
+.nav a.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; background: rgba(110,168,255,.15); border: 1px solid rgba(255,255,255,.08); transition: background .2s ease; }
+.nav a.btn:hover { background: rgba(110,168,255,.3); }
+
+.hero { padding: 64px 0 40px; text-align: center; }
+.h1 { font-size: clamp(28px, 5vw, 46px); margin: 18px auto 12px; line-height: 1.12; font-weight: 800; }
+.sub { max-width: 720px; margin: 0 auto; color: var(--muted); font-size: 16px; }
+.down { margin-top: 36px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: linear-gradient(135deg, rgba(102,255,196,.15), rgba(110,168,255,.15)); border: 1px solid rgba(255,255,255,.08); }
+
+.section { padding: 56px 0; }
+.section h2 { font-size: clamp(22px, 4vw, 32px); margin: 0 0 18px; }
+.grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+.card { grid-column: span 12; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+@media (min-width: 720px) { .card { grid-column: span 6; } }
+@media (min-width: 1040px) { .card { grid-column: span 4; } }
+.card h3 { margin: 0; font-size: 18px; }
+.badge { font-size: 12px; color: var(--muted); border: 1px dashed rgba(255,255,255,.15); padding: 2px 8px; border-radius: 999px; align-self: flex-start; }
+.code { background: #0e1420; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 10px; font-family: ui-monospace, monospace; font-size: 12.5px; overflow: auto; word-break: break-all; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08); background: #0f1520; text-decoration: none; color: var(--text); cursor: pointer; transition: transform .1s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn.primary { background: rgba(110,168,255,.25); }
+.btn.success { background: rgba(102,255,196,.18); }
+
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 18px; padding: 10px 14px; border-radius: 999px; background: #0f1520; border: 1px solid rgba(255,255,255,.1); box-shadow: var(--shadow); display: none; }
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <nav class="nav">
+        <div class="brand">
+          <div class="logo">O</div>
+          <div>ODH Plugins</div>
+        </div>
+        <a href="#plugins" class="btn">Plugins</a>
+      </nav>
+    </div>
+  </header>  <main>
+    <section class="hero wrap">
+      <h1 class="h1">Your curated hub for <span style="background: linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent;">ODH Plugins</span></h1>
+      <p class="sub">Scroll Down To Find All Featured Addons, Copy And Import Then Into Overdrive H.</p>
+      <p><a class="down" href="#plugins" title="Scroll to Plugins">↓ View Plugins</a></p>
+    </section><section id="plugins" class="section">
+  <div class="wrap">
+    <h2>Plugins</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Better ODH</h3>
+        <span class="badge">Raw GitHub</span>
+        <pre class="code" id="code-better-odh">https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua</pre>
+        <div class="row">
+          <a class="btn primary" href="https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua" target="_blank" rel="noopener">Open Raw</a>
+          <button class="btn success" onclick="copyToClipboard('code-better-odh')">Copy URL</button>
+          <button class="btn" onclick="downloadFile('Better ODH Auto Updater.lua', 'https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua')">Download</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Gato's Addon Pack</h3>
+        <span class="badge">Raw GitHub</span>
+        <pre class="code" id="code-gato">https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh</pre>
+        <div class="row">
+          <a class="btn primary" href="https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh" target="_blank" rel="noopener">Open Raw</a>
+          <button class="btn success" onclick="copyToClipboard('code-gato')">Copy URL</button>
+          <button class="btn" onclick="downloadFile('Gato Addon Pack.canimport.odh', 'https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh')">Download</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Addon Pack</h3>
+        <span class="badge">Raw GitHub</span>
+        <pre class="code" id="code-aux">https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute</pre>
+        <div class="row">
+          <a class="btn primary" href="https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute" target="_blank" rel="noopener">Open Raw</a>
+          <button class="btn success" onclick="copyToClipboard('code-aux')">Copy URL</button>
+          <button class="btn" onclick="downloadFile('Addon Pack - Execute', 'https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute')">Download</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+  </main>  <div id="toast" class="toast" role="status" aria-live="polite"></div>  <script>
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'inline-flex';
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2200);
+    }
+
+    function copyToClipboard(codeId) {
+      const el = document.getElementById(codeId);
+      const text = el?.textContent?.trim();
+      if (!text) return;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => showToast('Copied URL')); 
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); showToast('Copied URL'); } catch(e) { showToast('Copy failed'); }
+        ta.remove();
+      }
+    }
+
+    async function downloadFile(filename, url) {
+      try {
+        const res = await fetch(url, { mode: 'cors' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const blob = await res.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename || 'download';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+        showToast('Download started');
+      } catch (err) {
+        window.open(url, '_blank', 'noopener');
+        showToast('Opened raw file');
+      }
+    }
+  </script></body>
+</html>
