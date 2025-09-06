@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>How To Make ODH Plugins</title>
+<title>Overdrive H Plugin Tutorial</title>
 <style>
 :root{
   --bg1:#0b0f14;
@@ -29,57 +29,21 @@ html,body{
 }
 a{ color:var(--brand); text-decoration:none; }
 a:hover{text-decoration:underline;}
-.site-header{ position:sticky; top:0; z-index:50; backdrop-filter:blur(10px); background:rgba(11,15,20,.8); border-bottom:1px solid rgba(255,255,255,.06); }
 .wrap{ max-width:1100px; margin:0 auto; padding:0 20px; }
-.nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
-.brand{ display:flex; align-items:center; gap:12px; font-weight:700; }
-.brand img.logo{ width:32px; height:32px; border-radius:8px; box-shadow:var(--shadow); object-fit:cover; }
-.nav a.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:rgba(110,168,255,.15); border:1px solid rgba(255,255,255,.08); transition:background .2s ease; color:var(--text); }
-.nav a.btn:hover{ background:rgba(110,168,255,.3); }
-
-.hero{ padding:64px 0 40px; text-align:center; }
-.h1{ font-size:clamp(28px,5vw,46px); margin:18px auto 12px; line-height:1.12; font-weight:800; }
-.h1 .gradient { background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color: transparent; color:transparent; }
-.sub{ max-width:720px; margin:0 auto 24px; color:var(--muted); font-size:16px; word-break:normal; }
-
 .section{ padding:56px 0; }
-.section h2{ font-size:clamp(22px,4vw,32px); margin:0 0 18px; color:var(--text); }
 .card{ background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:24px; }
 .card h3{ margin:0 0 12px; font-size:20px; }
 .card p{ margin:8px 0; line-height:1.5; }
 .card a{ color:var(--brand); text-decoration:none; }
 .card a:hover{text-decoration:underline;}
-
 footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap">
-    <nav class="nav">
-      <div class="brand">
-        <img class="logo" src="https://github.com/not-gato/ODHAddons/raw/refs/heads/main/Files/Logo.png" alt="ODH Logo">
-        <div>ODH Plugins</div>
-      </div>
-      <div>
-        <a href="#howtomake" class="btn">How To Make</a>
-        <a href="#howtouse" class="btn">How To Use</a>
-      </div>
-    </nav>
-  </div>
-</header>
-
 <main class="wrap">
   <section id="howtomake" class="section">
-    <h2>How To Do Overdrive H Plugins?</h2>
-    <p class="sub">This will show you a <strong><em>Step-By-Step</em></strong> tutorial on how to make an Overdrive H plugin!</p>
     <div id="howtomake-content" class="card"></div>
-  </section>
-
-  <section id="howtouse" class="section" style="display:none;">
-    <h2>How To Use Plugins</h2>
-    <p class="sub">This section will guide you on using your Overdrive H plugins. (Content can be added later)</p>
   </section>
 </main>
 
@@ -89,28 +53,8 @@ footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); bor
 </footer>
 
 <script>
-// Hash-based routing
-function showSection(hash){
-  const make = document.getElementById('howtomake');
-  const use = document.getElementById('howtouse');
-  if(hash === '#howtouse'){
-    make.style.display = 'none';
-    use.style.display = 'block';
-  }else{
-    make.style.display = 'block';
-    use.style.display = 'none';
-  }
-}
-showSection(window.location.hash);
-window.addEventListener('hashchange', () => { showSection(window.location.hash); });
-
-// Tutorial content
+// Tutorial steps only (removed title and top text)
 const tutorialText = `
-How To Do Overdrive H Plugins?
-This Will Show u a *Step-By-Step* Tutorial On How To Make a Overdrive H Plugin!
-
-# How To?
-
 1. Join The **Discord Server**: (Discord Server)[https://discord.gg/overdrivehub]
 2. Buy **Premium** Or **Exclusive** At (Buy)[https://discord.com/channels/1364032023819190322/1364133583534424104]
 3. Go To The (Addons)[https://discord.com/channels/1364032023819190322/1409029337172410509] Channel, And Go To (How To Use)[https://discord.com/channels/1364032023819190322/1409031382973550612] Post Made By **! Kaguya** And Download The File
@@ -118,7 +62,7 @@ This Will Show u a *Step-By-Step* Tutorial On How To Make a Overdrive H Plugin!
 5. After You Have Learned How To Use Just Make a \`.lua\` On \`/Ixry Shizuka/Plugins\` And Execute **Overdrive H**
 `;
 
-// Parse markdown-like text
+// Parse markdown-like syntax: bold, italic, links
 function parseTutorial(text){
   text = text.replace(/</g,"&lt;").replace(/>/g,"&gt;");
   text = text.replace(/\(([^)]+)\)\[([^\]]+)\]/g, '<a href="$2" target="_blank">$1</a>');
@@ -127,6 +71,8 @@ function parseTutorial(text){
   text = text.replace(/\n/g, '<br>');
   return text;
 }
+
+// Render into content
 document.getElementById('howtomake-content').innerHTML = parseTutorial(tutorialText);
 </script>
 
