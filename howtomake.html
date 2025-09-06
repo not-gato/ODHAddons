@@ -36,10 +36,12 @@ a:hover{text-decoration:underline;}
 .brand img.logo{ width:32px; height:32px; border-radius:8px; box-shadow:var(--shadow); object-fit:cover; }
 .nav a.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:rgba(110,168,255,.15); border:1px solid rgba(255,255,255,.08); transition:background .2s ease; color:var(--text); }
 .nav a.btn:hover{ background:rgba(110,168,255,.3); }
+
 .hero{ padding:64px 0 40px; text-align:center; }
 .h1{ font-size:clamp(28px,5vw,46px); margin:18px auto 12px; line-height:1.12; font-weight:800; }
 .h1 .gradient { background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color: transparent; color:transparent; }
 .sub{ max-width:720px; margin:0 auto 24px; color:var(--muted); font-size:16px; word-break:normal; }
+
 .section{ padding:56px 0; }
 .section h2{ font-size:clamp(22px,4vw,32px); margin:0 0 18px; color:var(--text); }
 .card{ background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:24px; }
@@ -47,10 +49,12 @@ a:hover{text-decoration:underline;}
 .card p{ margin:8px 0; line-height:1.5; }
 .card a{ color:var(--brand); text-decoration:none; }
 .card a:hover{text-decoration:underline;}
+
 footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); }
 </style>
 </head>
 <body>
+
 <header class="site-header">
   <div class="wrap">
     <nav class="nav">
@@ -70,14 +74,7 @@ footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); bor
   <section id="howtomake" class="section">
     <h2>How To Do Overdrive H Plugins?</h2>
     <p class="sub">This will show you a <strong><em>Step-By-Step</em></strong> tutorial on how to make an Overdrive H plugin!</p>
-    <div class="card">
-      <h3>Step-by-Step Guide</h3>
-      <p>1. Join the **Discord Server**: <a href="https://discord.gg/overdrivehub" target="_blank" rel="noopener"><em>Discord Server</em></a></p>
-      <p>2. Buy **Premium** or **Exclusive** at <a href="https://discord.com/channels/1364032023819190322/1364133583534424104" target="_blank" rel="noopener"><em>Buy</em></a></p>
-      <p>3. Go to the <a href="https://discord.com/channels/1364032023819190322/1409029337172410509" target="_blank" rel="noopener"><em>Addons</em></a> channel, and go to <a href="https://discord.com/channels/1364032023819190322/1409031382973550612" target="_blank" rel="noopener"><em>How To Use</em></a> post made by **! Kaguya** and download the file.</p>
-      <p>4. Open the file and you will see how to import the global variable and make stuff like buttons, toggles, dropdowns, etc.</p>
-      <p>5. After you have learned how to use it, just make a <code>.lua</code> file in <code>/Ixry Shizuka/Plugins</code> and execute **Overdrive H**.</p>
-    </div>
+    <div id="howtomake-content" class="card"></div>
   </section>
 
   <section id="howtouse" class="section" style="display:none;">
@@ -92,6 +89,7 @@ footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); bor
 </footer>
 
 <script>
+// Hash-based routing
 function showSection(hash){
   const make = document.getElementById('howtomake');
   const use = document.getElementById('howtouse');
@@ -103,14 +101,34 @@ function showSection(hash){
     use.style.display = 'none';
   }
 }
-
-// initial load
 showSection(window.location.hash);
+window.addEventListener('hashchange', () => { showSection(window.location.hash); });
 
-// handle hash change
-window.addEventListener('hashchange', () => {
-  showSection(window.location.hash);
-});
+// Tutorial content
+const tutorialText = `
+How To Do Overdrive H Plugins?
+This Will Show u a *Step-By-Step* Tutorial On How To Make a Overdrive H Plugin!
+
+# How To?
+
+1. Join The **Discord Server**: (Discord Server)[https://discord.gg/overdrivehub]
+2. Buy **Premium** Or **Exclusive** At (Buy)[https://discord.com/channels/1364032023819190322/1364133583534424104]
+3. Go To The (Addons)[https://discord.com/channels/1364032023819190322/1409029337172410509] Channel, And Go To (How To Use)[https://discord.com/channels/1364032023819190322/1409031382973550612] Post Made By **! Kaguya** And Download The File
+4. Open The File And You Will See How To Import The Global Variable And Make Stuff Like Buttons, Toggles, Dropdown, etc...
+5. After You Have Learned How To Use Just Make a \`.lua\` On \`/Ixry Shizuka/Plugins\` And Execute **Overdrive H**
+`;
+
+// Parse markdown-like text
+function parseTutorial(text){
+  text = text.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  text = text.replace(/\(([^)]+)\)\[([^\]]+)\]/g, '<a href="$2" target="_blank">$1</a>');
+  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  text = text.replace(/\n/g, '<br>');
+  return text;
+}
+document.getElementById('howtomake-content').innerHTML = parseTutorial(tutorialText);
 </script>
+
 </body>
 </html>
