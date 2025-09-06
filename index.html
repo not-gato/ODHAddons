@@ -1,159 +1,442 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ODH Plugins</title>
-<style>
-:root{
-  --bg1:#0b0f14; --bg2:#101820; --bg3:#0d141f;
-  --muted:#9fb0c6; --text:#e9f0ff; --brand:#6ea8ff; --brand-2:#9b7bff;
-  --accent:#66ffc4; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.45);
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:ui-sans-serif,system-ui,Arial;color:var(--text);background:linear-gradient(160deg,var(--bg1),var(--bg2) 60%,var(--bg3));display:flex;min-height:100vh;transition:all .3s;}
-a{color:var(--brand);text-decoration:none;} a:hover{text-decoration:underline;}
-/* Sidebar */
-.sidebar{
-  width:220px; background:rgba(11,15,20,.95); backdrop-filter:blur(8px); padding:20px; display:flex; flex-direction:column; gap:12px; position:fixed; left:0; top:0; bottom:0; z-index:1000; transform:translateX(0); transition:transform .3s ease;
-}
-.sidebar.closed{transform:translateX(-100%);}
-.sidebar h2{margin-bottom:12px;font-size:18px;}
-.sidebar a{display:block;padding:10px 12px;border-radius:10px;background:rgba(110,168,255,.1);border:1px solid rgba(255,255,255,.08);color:var(--text);}
-.sidebar a:hover{background:rgba(110,168,255,.2);}
-/* Hamburger */
-.hamburger{
-  position:fixed; top:16px; left:16px; width:32px; height:32px; display:flex; flex-direction:column; justify-content:space-around; cursor:pointer; z-index:1100;
-}
-.hamburger div{width:32px; height:4px; background:var(--text); border-radius:2px; transition:all .3s;}
-.hamburger.active div:nth-child(1){transform:rotate(45deg) translate(6px,6px);}
-.hamburger.active div:nth-child(2){opacity:0;}
-.hamburger.active div:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);}
-main{margin-left:220px; flex:1; padding:20px; transition:margin-left .3s;}
-main.shifted{margin-left:0;}
-/* Sections */
-.section{padding:40px 0;}
-.section h2{font-size:28px;margin-bottom:16px;color:var(--text);}
-.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:16px;margin-bottom:18px;}
-.code{background:#0e1420;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px;font-family:ui-monospace,monospace;font-size:13px;overflow:auto;word-break:break-word;color:var(--text);}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#0f1520;color:var(--text);cursor:pointer;transition:transform .1s ease;}
-.btn.success{background:rgba(102,255,196,.18);}
-.btn:hover{transform:translateY(-1px);}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;padding:10px 14px;border-radius:999px;background:#0f1520;border:1px solid rgba(255,255,255,.1);box-shadow:var(--shadow);display:none;color:var(--text);}
-.music-popup{position:fixed;bottom:20px;right:20px;background:rgba(15,21,32,0.95);border:1px solid rgba(255,255,255,0.08);border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,0.4);padding:12px 16px;z-index:9999;width:280px;display:flex;flex-direction:column;gap:8px;}
-.music-header{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted);margin-bottom:6px;}
-.close-btn{background:transparent;border:none;color:var(--text);font-size:18px;cursor:pointer;}
-.close-btn:hover{color:var(--accent);}
-.music-popup audio{width:100%;}
-#music-reopen{position:fixed;bottom:20px;right:20px;display:none;z-index:9998;}
-#music-reopen button{border-radius:999px;padding:10px 12px;border:1px solid rgba(255,255,255,.08);background:rgba(15,21,32,0.95);color:var(--text);cursor:pointer;box-shadow:var(--shadow);}
-@media(max-width:720px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.hamburger{display:flex;} main{margin-left:0;}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ODH Plugins</title>
+  <style>
+    :root{
+      --bg1:#0b0f14;
+      --bg2:#101820;
+      --bg3:#0d141f;
+      --muted:#9fb0c6;
+      --text:#e9f0ff;
+      --brand:#6ea8ff;
+      --brand-2:#9b7bff;
+      --accent:#66ffc4;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.45);
+    }
+
+    /* page base */
+    html,body{
+      margin:0;
+      padding:0;
+      height:100%;
+      font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial;
+      color:var(--text);
+      background: linear-gradient(160deg, var(--bg1), var(--bg2) 60%, var(--bg3));
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    a{ color:var(--brand); text-decoration:none; }
+    a:hover{text-decoration:underline;}
+
+    .site-header{ position:sticky; top:0; z-index:50; backdrop-filter:blur(10px); background:rgba(11,15,20,.8); border-bottom:1px solid rgba(255,255,255,.06); }
+    .wrap{ max-width:1100px; margin:0 auto; padding:0 20px; }
+    .nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:700; }
+    .brand img.logo{ width:32px; height:32px; border-radius:8px; box-shadow:var(--shadow); object-fit:cover; }
+
+    .nav a.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:rgba(110,168,255,.15); border:1px solid rgba(255,255,255,.08); transition:background .2s ease; color:var(--text); }
+    .nav a.btn:hover{ background:rgba(110,168,255,.3); }
+
+    .hero{ padding:64px 0 40px; text-align:center; }
+    .h1{ font-size:clamp(28px,5vw,46px); margin:18px auto 12px; line-height:1.12; font-weight:800; }
+    .h1 .gradient { background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color: transparent; color:transparent; }
+    .sub{ max-width:720px; margin:0 auto; color:var(--muted); font-size:16px; word-break:normal; }
+    .down{ margin-top:36px; display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; background: linear-gradient(135deg, rgba(102,255,196,.15), rgba(110,168,255,.15)); border:1px solid rgba(255,255,255,.08); color:var(--text); }
+
+    .section{ padding:56px 0; }
+    .section h2{ font-size:clamp(22px,4vw,32px); margin:0 0 18px; color:var(--text); }
+    .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:18px; }
+    .card{ grid-column:span 12; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; display:flex; flex-direction:column; gap:14px; word-break:break-word; overflow-wrap:break-word; }
+    @media(min-width:720px){ .card{ grid-column:span 6; } }
+    @media(min-width:1040px){ .card{ grid-column:span 4; } }
+
+    .card h3{ margin:0; font-size:18px; }
+    .badge{ font-size:12px; color:var(--muted); border:1px dashed rgba(255,255,255,.15); padding:2px 8px; border-radius:999px; align-self:flex-start; }
+    .credit{ font-size:13px; color:var(--muted); }
+    .code{ background:#0e1420; border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:10px; font-family:ui-monospace,monospace; font-size:12.5px; overflow:auto; word-break:break-word; color:var(--text); }
+
+    .row{ display:flex; gap:10px; flex-wrap:wrap; }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0f1520; color:var(--text); cursor:pointer; transition:transform .1s ease; }
+    .btn:hover{ transform:translateY(-1px); }
+    .btn.primary{ background:rgba(110,168,255,.25); }
+    .btn.success{ background:rgba(102,255,196,.18); }
+
+    .toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:18px; padding:10px 14px; border-radius:999px; background:#0f1520; border:1px solid rgba(255,255,255,.1); box-shadow:var(--shadow); display:none; color:var(--text); }
+
+    footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); }
+
+    /* Music player popup */
+    .music-popup{ position:fixed; bottom:20px; right:20px; background:rgba(15,21,32,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:16px; box-shadow:0 8px 25px rgba(0,0,0,0.4); padding:12px 16px; z-index:9999; width:280px; display:flex; flex-direction:column; gap:8px; }
+    .music-header{ display:flex; justify-content:space-between; align-items:center; font-size:14px; color:var(--muted); margin-bottom:6px; }
+    .close-btn{ background:transparent; border:none; color:var(--text); font-size:18px; cursor:pointer; }
+    .close-btn:hover{ color:var(--accent); }
+    .music-popup audio{ width:100%; }
+
+    #music-reopen{ position:fixed; bottom:20px; right:20px; display:none; z-index:9998; }
+    #music-reopen button{ border-radius:999px; padding:10px 12px; border:1px solid rgba(255,255,255,.08); background:rgba(15,21,32,0.95); color:var(--text); cursor:pointer; box-shadow:var(--shadow); }
+
+    .other-loader { color:var(--muted); font-size:14px; }
+
+    @media(max-width:440px){ .music-popup{ width:92%; left:4%; right:4%; bottom:14px; } #music-reopen{ right:12px; bottom:12px; } }
+  </style>
 </head>
 <body>
+  <header class="site-header" role="banner">
+    <div class="wrap">
+      <nav class="nav" role="navigation" aria-label="Main">
+        <div class="brand">
+          <img class="logo" src="https://github.com/not-gato/ODHAddons/raw/refs/heads/main/Files/Logo.png" alt="ODH Logo">
+          <div>ODH Plugins</div>
+        </div>
+        <a href="#plugins" class="btn" aria-label="Go to plugins">Plugins</a>
+      </nav>
+    </div>
+  </header>
 
-<!-- Hamburger -->
-<div class="hamburger" id="hamburger">
-  <div></div><div></div><div></div>
-</div>
+  <main>
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="h1">Your Trusted Website For <span class="gradient">Overdrive H Plugins</span></h1>
+      <p class="sub">Safe and verified. Scroll down to find all featured addons - copy the URL or download and import into Overdrive H.</p>
+      <p><a class="down" href="#plugins" title="View plugins">View Plugins</a></p>
+    </section>
 
-<!-- Sidebar -->
-<div class="sidebar closed" id="sidebar">
-  <h2>ODH Menu</h2>
-  <a href="#home">Home</a>
-  <a href="#plugins">Plugins</a>
-  <a href="#howtomake">How To Make</a>
-</div>
+    <!-- Plugins -->
+    <section id="plugins" class="section" aria-labelledby="plugins-title">
+      <div class="wrap">
+        <h2 id="plugins-title">Plugins</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Better ODH</h3>
+            <span class="badge">Raw GitHub</span>
+            <pre class="code">https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua</pre>
+            <div class="row">
+              <button class="btn success" data-url="https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua">Copy URL</button>
+              <button class="btn" data-download-name="Better ODH Auto Updater.lua" data-download-url="https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua">Download</button>
+            </div>
+            <p class="credit">Made by <strong>b6o6s</strong></p>
+          </article>
 
-<!-- Main content -->
-<main id="main-content">
-  <!-- Home Section -->
-  <section class="section" id="home">
-    <h2>Home</h2>
-    <p>Welcome to ODH Plugins. Safe and verified addons for Overdrive H.</p>
-  </section>
+          <article class="card">
+            <h3>Gato's Addon Pack</h3>
+            <span class="badge">Raw GitHub</span>
+            <pre class="code">https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh</pre>
+            <div class="row">
+              <button class="btn success" data-url="https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh">Copy URL</button>
+              <button class="btn" data-download-name="Gato Addon Pack.canimport.odh" data-download-url="https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh">Download</button>
+            </div>
+            <p class="credit">Made by <strong>not_.gato</strong></p>
+          </article>
 
-  <!-- Plugins Section -->
-  <section class="section" id="plugins">
-    <h2>Plugins</h2>
-    <div class="card">
-      <h3>Better ODH</h3>
-      <pre class="code">https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua</pre>
-      <div>
-        <button class="btn success" onclick="copyText('https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua')">Copy URL</button>
+          <article class="card">
+            <h3>Addon Pack</h3>
+            <span class="badge">Raw GitHub</span>
+            <pre class="code">https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute</pre>
+            <div class="row">
+              <button class="btn success" data-url="https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute">Copy URL</button>
+              <button class="btn" data-download-name="Addon Pack - Execute" data-download-url="https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute">Download</button>
+            </div>
+            <p class="credit">Made by <strong>lzzzx</strong></p>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- How To Make Section -->
-  <section class="section" id="howtomake">
-    <h2>How To Make Plugins</h2>
-    <div class="card">
-      <p><strong>Step 1:</strong> Join the <a href="https://discord.gg/overdrivehub" target="_blank"><em>Discord Server</em></a></p>
-      <p><strong>Step 2:</strong> Buy <strong>Premium</strong> or <strong>Exclusive</strong> at <a href="https://discord.com/channels/1364032023819190322/1364133583534424104" target="_blank"><em>Buy</em></a></p>
-      <p><strong>Step 3:</strong> Go to the <a href="https://discord.com/channels/1364032023819190322/1409029337172410509" target="_blank"><em>Addons</em></a> channel and check <a href="https://discord.com/channels/1364032023819190322/1409031382973550612" target="_blank"><em>How To Use</em></a> post by <strong>! Kaguya</strong></p>
-      <p><strong>Step 4:</strong> Open the file and learn how to import global variables and make buttons, toggles, dropdowns, etc.</p>
-      <p><strong>Step 5:</strong> Make a <code>.lua</code> in <code>/Ixry Shizuka/Plugins</code> and execute <strong>Overdrive H</strong></p>
-    </div>
-  </section>
-</main>
+    <!-- Other (dynamic) -->
+    <section id="other" class="section" aria-labelledby="other-title">
+      <div class="wrap">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:12px;">
+          <h2 id="other-title">Other</h2>
+          <div>
+            <button class="btn" id="refresh-other">Refresh</button>
+          </div>
+        </div>
+        <div id="other-grid" class="grid">
+          <div class="card other-loader">Loading files from repository...</div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<!-- Music Player Popup -->
-<div id="music-popup" class="music-popup">
-  <div class="music-header">
-    <span>Now Playing</span>
-    <button class="close-btn" id="music-close">Close</button>
+  <!-- Music player popup (no special characters) -->
+  <div id="music-popup" class="music-popup" role="region" aria-label="Music player">
+    <div class="music-header">
+      <span>Now Playing</span>
+      <button class="close-btn" id="music-close">Close</button>
+    </div>
+    <audio id="bg-music" controls autoplay loop muted>
+      <source src="https://github.com/not-gato/ODHAddons/raw/refs/heads/main/Files/lofi-lofi-song-music-398288.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>
-  <audio id="bg-music" controls autoplay loop muted>
-    <source src="https://github.com/not-gato/ODHAddons/raw/refs/heads/main/Files/lofi-lofi-song-music-398288.mp3" type="audio/mpeg">
-  </audio>
-</div>
-<div id="music-reopen"><button id="music-open">Music</button></div>
 
-<div id="toast" class="toast"></div>
+  <!-- Reopen button -->
+  <div id="music-reopen" aria-hidden="true">
+    <button id="music-open">Music</button>
+  </div>
 
-<script>
-// Sidebar toggle
-const hamburger = document.getElementById('hamburger');
-const sidebar = document.getElementById('sidebar');
-const mainContent = document.getElementById('main-content');
+  <footer>
+    Music by <a href="https://pixabay.com/users/delosound-46524562/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener">DELOSound</a> from
+    <a href="https://pixabay.com/music/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener">Pixabay</a>
+  </footer>
 
-hamburger.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
-  hamburger.classList.toggle('active');
-});
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-// Copy helper
-function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.display='inline-flex';
-  clearTimeout(window.__toastTimer);
-  window.__toastTimer=setTimeout(()=>{t.style.display='none';},2200);
-}
-async function copyText(text){
-  try{ await navigator.clipboard.writeText(text); showToast('Copied!'); }
-  catch{ window.open(text,'_blank'); showToast('Opened link'); }
-}
+  <script>
+    // small helpers
+    function showToast(msg){
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'inline-flex';
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(()=>{ t.style.display='none'; }, 2200);
+    }
 
-// Music popup
-const musicPopup = document.getElementById('music-popup');
-const musicReopen = document.getElementById('music-reopen');
-const musicCloseBtn = document.getElementById('music-close');
-const musicOpenBtn = document.getElementById('music-open');
-const bgAudio = document.getElementById('bg-music');
-musicCloseBtn.addEventListener('click', ()=>{
-  musicPopup.style.display='none';
-  musicReopen.style.display='block';
-});
-musicOpenBtn.addEventListener('click', ()=>{
-  musicPopup.style.display='flex';
-  musicReopen.style.display='none';
-});
-document.addEventListener('click', function onceUnmute(){
-  if(bgAudio && bgAudio.muted){ bgAudio.muted=false; bgAudio.play().catch(()=>{}); }
-  document.removeEventListener('click', onceUnmute);
-});
-</script>
+    // copy function used by buttons (uses dataset to avoid inline JS)
+    async function copyText(text){
+      if(!text) return showToast('Nothing to copy');
+      if(navigator.clipboard && window.isSecureContext){
+        try { await navigator.clipboard.writeText(text); showToast('Copied URL'); return; } catch(e){}
+      }
+      try{
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly','');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        showToast('Copied URL');
+      }catch(e){
+        showToast('Copy failed - opening link');
+        window.open(text, '_blank', 'noopener');
+      }
+    }
+
+    // download helper
+    async function downloadFileByUrl(filename, url){
+      try{
+        const res = await fetch(url, { mode:'cors' });
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        const blob = await res.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename || 'download';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(()=>URL.revokeObjectURL(a.href), 1500);
+        showToast('Download started');
+      }catch(err){
+        window.open(url, '_blank', 'noopener');
+        showToast('Opened raw file');
+      }
+    }
+
+    // wire up plugin copy/download buttons (no inline onclick)
+    document.addEventListener('click', function(e){
+      const t = e.target;
+      if(t.matches('button[data-url]')){
+        copyText(t.dataset.url);
+      } else if(t.matches('button[data-download-url]')){
+        downloadFileByUrl(t.dataset.downloadName, t.dataset.downloadUrl);
+      }
+    });
+
+    // Music popup controls
+    const musicPopup = document.getElementById('music-popup');
+    const musicReopen = document.getElementById('music-reopen');
+    const musicCloseBtn = document.getElementById('music-close');
+    const musicOpenBtn = document.getElementById('music-open');
+    const bgAudio = document.getElementById('bg-music');
+
+    musicCloseBtn.addEventListener('click', function(){
+      musicPopup.style.display = 'none';
+      musicReopen.style.display = 'block';
+      musicReopen.setAttribute('aria-hidden','false');
+      // audio element remains in DOM and continues playing
+    });
+    musicOpenBtn.addEventListener('click', function(){
+      musicPopup.style.display = 'flex';
+      musicReopen.style.display = 'none';
+      musicReopen.setAttribute('aria-hidden','true');
+    });
+
+    // unmute on first user gesture
+    document.addEventListener('click', function onceUnmute(){
+      if(bgAudio && bgAudio.muted){
+        bgAudio.muted = false;
+        bgAudio.play().catch(()=>{});
+      }
+      document.removeEventListener('click', onceUnmute);
+    });
+
+    // fetch "Other" folder files and parse first 5 lines for metadata
+    async function fetchOther(){
+      const grid = document.getElementById('other-grid');
+      grid.innerHTML = '<div class="card other-loader">Loading files from repository...</div>';
+      const owner = 'not-gato';
+      const repo = 'ODHAddons';
+      const path = 'Other';
+      const apiUrl = 'https://api.github.com/repos/' + encodeURIComponent(owner) + '/' + encodeURIComponent(repo) + '/contents/' + encodeURIComponent(path);
+
+      try{
+        const res = await fetch(apiUrl, { headers: { Accept: 'application/vnd.github.v3+json' } });
+        if(!res.ok) throw new Error('GitHub API error: ' + res.status);
+        const list = await res.json();
+        const files = Array.isArray(list) ? list.filter(item => item.type === 'file') : [];
+        if(files.length === 0){
+          grid.innerHTML = '<div class="card other-loader">No files found in Other/</div>';
+          return;
+        }
+        grid.innerHTML = '';
+        // limit concurrency
+        const concurrency = 6;
+        let i = 0;
+        async function worker(){
+          while(i < files.length){
+            const idx = i++;
+            const file = files[idx];
+            try{
+              await renderOtherFile(file, grid);
+            }catch(e){
+              console.error('File fetch/render error for', file.name, e);
+              const el = document.createElement('article');
+              el.className = 'card';
+              el.textContent = file.name + ' - Failed to load file';
+              grid.appendChild(el);
+            }
+          }
+        }
+        await Promise.all(new Array(Math.min(concurrency, files.length)).fill(0).map(worker));
+      }catch(err){
+        console.error(err);
+        grid.innerHTML = '<div class="card other-loader">Failed to load files from GitHub. (' + String(err.message) + ')</div>';
+      }
+    }
+
+    // render single file's card
+    async function renderOtherFile(file, grid){
+      const downloadUrl = file.download_url;
+      const filename = file.name;
+      const txtRes = await fetch(downloadUrl);
+      if(!txtRes.ok) throw new Error('Failed to fetch file: ' + txtRes.status);
+      const text = await txtRes.text();
+      const lines = text.replace(/\r\n/g, '\n').split('\n').slice(0, 20);
+
+      const meta = { Rate: '', MadeBy: '', SpecialID: '', Name: '', Description: '' };
+      let parsedCount = 0;
+      for(let idx=0; idx<Math.min(lines.length, 10) && parsedCount < 5; idx++){
+        const raw = lines[idx].trim();
+        if(!raw) continue;
+        const m = raw.match(/^(?:--\s*)?([^:]+)\s*:\s*(.+)$/);
+        if(m){
+          const key = m[1].trim().toLowerCase();
+          const value = m[2].trim();
+          if(key.includes('rate') && !meta.Rate){ meta.Rate = value; parsedCount++; }
+          else if(key.includes('made') && !meta.MadeBy){ meta.MadeBy = value; parsedCount++; }
+          else if(key.includes('special') && !meta.SpecialID){ meta.SpecialID = value; parsedCount++; }
+          else if(key === 'name' || key.includes('name')){ if(!meta.Name){ meta.Name = value; parsedCount++; } }
+          else if(key.includes('description') || key.includes('desc')){ if(!meta.Description){ meta.Description = value; parsedCount++; } }
+        }
+      }
+
+      // fallback search in first 20 lines
+      if(!meta.Name || !meta.Description){
+        for(let idx=0; idx<Math.min(lines.length, 20); idx++){
+          const raw = lines[idx].trim();
+          if(!raw) continue;
+          const m = raw.match(/^(?:--\s*)?([^:]+)\s*:\s*(.+)$/);
+          if(!m) continue;
+          const key = m[1].trim().toLowerCase();
+          const value = m[2].trim();
+          if(!meta.Name && (key === 'name' || key.includes('name'))) meta.Name = value;
+          if(!meta.Description && (key.includes('desc') || key.includes('description'))) meta.Description = value;
+        }
+      }
+
+      const el = document.createElement('article');
+      el.className = 'card';
+
+      const title = meta.Name || filename;
+      const rate = meta.Rate || 'Unknown';
+      const madeBy = meta.MadeBy || 'Unknown';
+      const specialId = meta.SpecialID || 'None';
+      const description = meta.Description || 'No description';
+
+      // build content safely using text nodes and sanitized elements
+      const h3 = document.createElement('h3');
+      h3.textContent = title;
+      el.appendChild(h3);
+
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.textContent = 'Other';
+      el.appendChild(badge);
+
+      const pre = document.createElement('pre');
+      pre.className = 'code';
+      pre.textContent = downloadUrl;
+      el.appendChild(pre);
+
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'btn success';
+      copyBtn.title = 'Copy file URL';
+      copyBtn.textContent = 'Copy URL';
+      copyBtn.addEventListener('click', function(){ copyText(downloadUrl); });
+      row.appendChild(copyBtn);
+
+      const dlBtn = document.createElement('button');
+      dlBtn.className = 'btn';
+      dlBtn.title = 'Download file';
+      dlBtn.textContent = 'Download';
+      dlBtn.addEventListener('click', function(){ downloadFileByUrl(filename, downloadUrl); });
+      row.appendChild(dlBtn);
+
+      el.appendChild(row);
+
+      const p1 = document.createElement('p');
+      p1.className = 'credit';
+      p1.textContent = 'Rate: ' + rate + ' - Made by: ' + madeBy;
+      el.appendChild(p1);
+
+      const p2 = document.createElement('p');
+      p2.className = 'credit';
+      p2.textContent = 'Special ID: ' + specialId;
+      el.appendChild(p2);
+
+      const p3 = document.createElement('p');
+      p3.style.color = 'var(--muted)';
+      p3.style.marginTop = '6px';
+      p3.textContent = 'Description: ' + description;
+      el.appendChild(p3);
+
+      grid.appendChild(el);
+    }
+
+    // initial fetch and hook refresh button
+    document.addEventListener('DOMContentLoaded', function(){
+      const refresh = document.getElementById('refresh-other');
+      refresh.addEventListener('click', fetchOther);
+      // wire plugin area buttons (dataset approach used in HTML)
+      // buttons with data-url and data-download-url are handled via the global click listener above
+      fetchOther();
+    });
+
+    // error toast if audio fails to load
+    if(bgAudio){
+      bgAudio.addEventListener('error', function(){ showToast('Audio failed to load'); });
+    }
+  </script>
 </body>
 </html>
