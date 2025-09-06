@@ -6,16 +6,29 @@
   <title>ODH Plugins</title>
   <style>
     :root{
-      --bg1:#0b0f14; --bg2:#101820; --bg3:#0d141f;
-      --muted:#9fb0c6; --text:#e9f0ff; --brand:#6ea8ff; --brand-2:#9b7bff;
-      --accent:#66ffc4; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.45);
+      --bg1:#0b0f14;
+      --bg2:#101820;
+      --bg3:#0d141f;
+      --muted:#9fb0c6;
+      --text:#e9f0ff;
+      --brand:#6ea8ff;
+      --brand-2:#9b7bff;
+      --accent:#66ffc4;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.45);
     }
+
+    /* page base */
     html,body{
-      margin:0; padding:0; height:100%;
+      margin:0;
+      padding:0;
+      height:100%;
       font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial;
       color:var(--text);
       background: linear-gradient(160deg, var(--bg1), var(--bg2) 60%, var(--bg3));
-      min-height:100vh; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
     a{ color:var(--brand); text-decoration:none; }
@@ -32,20 +45,21 @@
 
     .hero{ padding:64px 0 40px; text-align:center; }
     .h1{ font-size:clamp(28px,5vw,46px); margin:18px auto 12px; line-height:1.12; font-weight:800; }
-    .sub{ max-width:720px; margin:0 auto; color:var(--muted); font-size:16px; }
+    .h1 .gradient { background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color: transparent; color:transparent; }
+    .sub{ max-width:720px; margin:0 auto; color:var(--muted); font-size:16px; word-break:normal; }
     .down{ margin-top:36px; display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; background: linear-gradient(135deg, rgba(102,255,196,.15), rgba(110,168,255,.15)); border:1px solid rgba(255,255,255,.08); color:var(--text); }
 
     .section{ padding:56px 0; }
     .section h2{ font-size:clamp(22px,4vw,32px); margin:0 0 18px; color:var(--text); }
     .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:18px; }
-    .card{ grid-column:span 12; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; display:flex; flex-direction:column; gap:14px; }
+    .card{ grid-column:span 12; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; display:flex; flex-direction:column; gap:14px; word-break:break-word; overflow-wrap:break-word; }
     @media(min-width:720px){ .card{ grid-column:span 6; } }
     @media(min-width:1040px){ .card{ grid-column:span 4; } }
 
     .card h3{ margin:0; font-size:18px; }
     .badge{ font-size:12px; color:var(--muted); border:1px dashed rgba(255,255,255,.15); padding:2px 8px; border-radius:999px; align-self:flex-start; }
     .credit{ font-size:13px; color:var(--muted); }
-    .code{ background:#0e1420; border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:10px; font-family:ui-monospace,monospace; font-size:12.5px; overflow:auto; word-break:break-all; color:var(--text); }
+    .code{ background:#0e1420; border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:10px; font-family:ui-monospace,monospace; font-size:12.5px; overflow:auto; word-break:break-word; color:var(--text); }
 
     .row{ display:flex; gap:10px; flex-wrap:wrap; }
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0f1520; color:var(--text); cursor:pointer; transition:transform .1s ease; }
@@ -57,7 +71,7 @@
 
     footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); }
 
-    /* Floating Music Player */
+    /* Music player popup */
     .music-popup{ position:fixed; bottom:20px; right:20px; background:rgba(15,21,32,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:16px; box-shadow:0 8px 25px rgba(0,0,0,0.4); padding:12px 16px; z-index:9999; width:280px; display:flex; flex-direction:column; gap:8px; }
     .music-header{ display:flex; justify-content:space-between; align-items:center; font-size:14px; color:var(--muted); margin-bottom:6px; }
     .close-btn{ background:transparent; border:none; color:var(--text); font-size:18px; cursor:pointer; }
@@ -67,7 +81,6 @@
     #music-reopen{ position:fixed; bottom:20px; right:20px; display:none; z-index:9998; }
     #music-reopen button{ border-radius:999px; padding:10px 12px; border:1px solid rgba(255,255,255,.08); background:rgba(15,21,32,0.95); color:var(--text); cursor:pointer; box-shadow:var(--shadow); }
 
-    /* Other section loader */
     .other-loader { color:var(--muted); font-size:14px; }
 
     @media(max-width:440px){ .music-popup{ width:92%; left:4%; right:4%; bottom:14px; } #music-reopen{ right:12px; bottom:12px; } }
@@ -88,9 +101,9 @@
 
   <main>
     <section class="hero wrap" aria-labelledby="hero-title">
-      <h1 id="hero-title" class="h1">Your Trusted Website For <span style="background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent;">Overdrive H Plugins</span></h1>
-      <p class="sub">Safe And Verified. Scroll down to find all featured addons â€” copy the URL or download and import into Overdrive H.</p>
-      <p><a class="down" href="#plugins" title="Scroll to Plugins">â†“ View Plugins</a></p>
+      <h1 id="hero-title" class="h1">Your Trusted Website For <span class="gradient">Overdrive H Plugins</span></h1>
+      <p class="sub">Safe and verified. Scroll down to find all featured addons - copy the URL or download and import into Overdrive H.</p>
+      <p><a class="down" href="#plugins" title="View plugins">View Plugins</a></p>
     </section>
 
     <!-- Plugins -->
@@ -103,8 +116,8 @@
             <span class="badge">Raw GitHub</span>
             <pre class="code">https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua</pre>
             <div class="row">
-              <button class="btn success" onclick="copyToClipboard('https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua')">Copy URL</button>
-              <button class="btn" onclick="downloadFile('Better ODH Auto Updater.lua','https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua')">Download</button>
+              <button class="btn success" data-url="https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua">Copy URL</button>
+              <button class="btn" data-download-name="Better ODH Auto Updater.lua" data-download-url="https://raw.githubusercontent.com/B6O6S/Better-ODH/refs/heads/main/Better%20ODH%20Auto%20Updater.lua">Download</button>
             </div>
             <p class="credit">Made by <strong>b6o6s</strong></p>
           </article>
@@ -114,8 +127,8 @@
             <span class="badge">Raw GitHub</span>
             <pre class="code">https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh</pre>
             <div class="row">
-              <button class="btn success" onclick="copyToClipboard('https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh')">Copy URL</button>
-              <button class="btn" onclick="downloadFile('Gato Addon Pack.canimport.odh','https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh')">Download</button>
+              <button class="btn success" data-url="https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh">Copy URL</button>
+              <button class="btn" data-download-name="Gato Addon Pack.canimport.odh" data-download-url="https://raw.githubusercontent.com/not-gato/Stuff/refs/heads/main/Gato/Addon/Pack/CanImport.odh">Download</button>
             </div>
             <p class="credit">Made by <strong>not_.gato</strong></p>
           </article>
@@ -125,8 +138,8 @@
             <span class="badge">Raw GitHub</span>
             <pre class="code">https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute</pre>
             <div class="row">
-              <button class="btn success" onclick="copyToClipboard('https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute')">Copy URL</button>
-              <button class="btn" onclick="downloadFile('Addon Pack - Execute','https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute')">Download</button>
+              <button class="btn success" data-url="https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute">Copy URL</button>
+              <button class="btn" data-download-name="Addon Pack - Execute" data-download-url="https://raw.githubusercontent.com/aux0on/ATAOs/refs/heads/main/Execute">Download</button>
             </div>
             <p class="credit">Made by <strong>lzzzx</strong></p>
           </article>
@@ -140,21 +153,21 @@
         <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:12px;">
           <h2 id="other-title">Other</h2>
           <div>
-            <button class="btn" id="refresh-other" onclick="fetchOther()">Refresh</button>
+            <button class="btn" id="refresh-other">Refresh</button>
           </div>
         </div>
         <div id="other-grid" class="grid">
-          <div class="card other-loader">Loading files from repositoryâ€¦</div>
+          <div class="card other-loader">Loading files from repository...</div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Floating Music Player -->
+  <!-- Music player popup (no special characters) -->
   <div id="music-popup" class="music-popup" role="region" aria-label="Music player">
     <div class="music-header">
-      <span>ðŸŽµ Now Playing</span>
-      <button class="close-btn" onclick="hideMusicPopup()" aria-label="Close music popup">Ã—</button>
+      <span>Now Playing</span>
+      <button class="close-btn" id="music-close">Close</button>
     </div>
     <audio id="bg-music" controls autoplay loop muted>
       <source src="https://github.com/not-gato/ODHAddons/raw/refs/heads/main/Files/lofi-lofi-song-music-398288.mp3" type="audio/mpeg">
@@ -164,18 +177,18 @@
 
   <!-- Reopen button -->
   <div id="music-reopen" aria-hidden="true">
-    <button onclick="showMusicPopup()" aria-label="Open music player">ðŸŽµ</button>
+    <button id="music-open">Music</button>
   </div>
 
   <footer>
     Music by <a href="https://pixabay.com/users/delosound-46524562/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener">DELOSound</a> from
-    <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener"> Pixabay</a>
+    <a href="https://pixabay.com/music/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=398288" target="_blank" rel="noopener">Pixabay</a>
   </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // show toast helper
+    // small helpers
     function showToast(msg){
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -184,8 +197,8 @@
       window.__toastTimer = setTimeout(()=>{ t.style.display='none'; }, 2200);
     }
 
-    // copy to clipboard (URL text)
-    async function copyToClipboard(text){
+    // copy function used by buttons (uses dataset to avoid inline JS)
+    async function copyText(text){
       if(!text) return showToast('Nothing to copy');
       if(navigator.clipboard && window.isSecureContext){
         try { await navigator.clipboard.writeText(text); showToast('Copied URL'); return; } catch(e){}
@@ -202,15 +215,15 @@
         ta.remove();
         showToast('Copied URL');
       }catch(e){
-        showToast('Copy failed â€” opening link');
+        showToast('Copy failed - opening link');
         window.open(text, '_blank', 'noopener');
       }
     }
 
     // download helper
-    async function downloadFile(filename, url){
+    async function downloadFileByUrl(filename, url){
       try{
-        const res = await fetch(url, { mode: 'cors' });
+        const res = await fetch(url, { mode:'cors' });
         if(!res.ok) throw new Error('HTTP ' + res.status);
         const blob = await res.blob();
         const a = document.createElement('a');
@@ -227,51 +240,64 @@
       }
     }
 
+    // wire up plugin copy/download buttons (no inline onclick)
+    document.addEventListener('click', function(e){
+      const t = e.target;
+      if(t.matches('button[data-url]')){
+        copyText(t.dataset.url);
+      } else if(t.matches('button[data-download-url]')){
+        downloadFileByUrl(t.dataset.downloadName, t.dataset.downloadUrl);
+      }
+    });
+
     // Music popup controls
-    function hideMusicPopup(){
-      const popup = document.getElementById('music-popup');
-      popup.style.display = 'none';
-      const reopen = document.getElementById('music-reopen');
-      reopen.style.display = 'block';
-      reopen.setAttribute('aria-hidden','false');
-    }
-    function showMusicPopup(){
-      const popup = document.getElementById('music-popup');
-      popup.style.display = 'flex';
-      const reopen = document.getElementById('music-reopen');
-      reopen.style.display = 'none';
-      reopen.setAttribute('aria-hidden','true');
-    }
+    const musicPopup = document.getElementById('music-popup');
+    const musicReopen = document.getElementById('music-reopen');
+    const musicCloseBtn = document.getElementById('music-close');
+    const musicOpenBtn = document.getElementById('music-open');
+    const bgAudio = document.getElementById('bg-music');
+
+    musicCloseBtn.addEventListener('click', function(){
+      musicPopup.style.display = 'none';
+      musicReopen.style.display = 'block';
+      musicReopen.setAttribute('aria-hidden','false');
+      // audio element remains in DOM and continues playing
+    });
+    musicOpenBtn.addEventListener('click', function(){
+      musicPopup.style.display = 'flex';
+      musicReopen.style.display = 'none';
+      musicReopen.setAttribute('aria-hidden','true');
+    });
 
     // unmute on first user gesture
-    document.addEventListener('click', ()=> {
-      const audio = document.getElementById('bg-music');
-      if(audio && audio.muted){ audio.muted = false; audio.play().catch(()=>{}); }
-    }, { once:true });
+    document.addEventListener('click', function onceUnmute(){
+      if(bgAudio && bgAudio.muted){
+        bgAudio.muted = false;
+        bgAudio.play().catch(()=>{});
+      }
+      document.removeEventListener('click', onceUnmute);
+    });
 
     // fetch "Other" folder files and parse first 5 lines for metadata
     async function fetchOther(){
       const grid = document.getElementById('other-grid');
-      grid.innerHTML = '<div class="card other-loader">Loading files from repositoryâ€¦</div>';
+      grid.innerHTML = '<div class="card other-loader">Loading files from repository...</div>';
       const owner = 'not-gato';
       const repo = 'ODHAddons';
       const path = 'Other';
-      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`;
+      const apiUrl = 'https://api.github.com/repos/' + encodeURIComponent(owner) + '/' + encodeURIComponent(repo) + '/contents/' + encodeURIComponent(path);
 
       try{
         const res = await fetch(apiUrl, { headers: { Accept: 'application/vnd.github.v3+json' } });
         if(!res.ok) throw new Error('GitHub API error: ' + res.status);
         const list = await res.json();
-        // filter to files only
         const files = Array.isArray(list) ? list.filter(item => item.type === 'file') : [];
         if(files.length === 0){
           grid.innerHTML = '<div class="card other-loader">No files found in Other/</div>';
           return;
         }
-
-        // render placeholders while fetching file contents
         grid.innerHTML = '';
-        // limit concurrency to avoid hammering (optional)
+        // limit concurrency
         const concurrency = 6;
         let i = 0;
         async function worker(){
@@ -284,52 +310,45 @@
               console.error('File fetch/render error for', file.name, e);
               const el = document.createElement('article');
               el.className = 'card';
-              el.innerHTML = `<h3>${escapeHtml(file.name)}</h3><p class="credit">Failed to load file</p>`;
+              el.textContent = file.name + ' - Failed to load file';
               grid.appendChild(el);
             }
           }
         }
-        // start workers
         await Promise.all(new Array(Math.min(concurrency, files.length)).fill(0).map(worker));
       }catch(err){
         console.error(err);
-        grid.innerHTML = `<div class="card other-loader">Failed to load files from GitHub. (${escapeHtml(err.message)})</div>`;
+        grid.innerHTML = '<div class="card other-loader">Failed to load files from GitHub. (' + String(err.message) + ')</div>';
       }
     }
 
-    // render a single file's card by fetching its download_url and parsing first 5 lines
+    // render single file's card
     async function renderOtherFile(file, grid){
-      const downloadUrl = file.download_url; // raw content
+      const downloadUrl = file.download_url;
       const filename = file.name;
-      // fetch raw text
       const txtRes = await fetch(downloadUrl);
       if(!txtRes.ok) throw new Error('Failed to fetch file: ' + txtRes.status);
       const text = await txtRes.text();
-      // split into lines and take first 5 lines (or fewer)
-      const lines = text.replace(/\r\n/g, '\n').split('\n').slice(0, 10); // take a few more to be safe
-      // parse first five meaningful lines (ignore empty lines / comments if necessary)
-      // We expect lines in the form: -- Key: Value
+      const lines = text.replace(/\r\n/g, '\n').split('\n').slice(0, 20);
+
       const meta = { Rate: '', MadeBy: '', SpecialID: '', Name: '', Description: '' };
       let parsedCount = 0;
       for(let idx=0; idx<Math.min(lines.length, 10) && parsedCount < 5; idx++){
         const raw = lines[idx].trim();
         if(!raw) continue;
-        // handle lines both with and without leading comment marker
-        const line = raw.replace(/^[-/\\#\s]*\s*/, ''); // remove stray leading symbols
-        // try to match "Rate: Value" or " -- Rate: Value" or "-- Rate: Value"
-        const m = line.match(/^(?:--\s*)?([^:]+)\s*:\s*(.+)$/);
+        const m = raw.match(/^(?:--\s*)?([^:]+)\s*:\s*(.+)$/);
         if(m){
           const key = m[1].trim().toLowerCase();
           const value = m[2].trim();
-          if(key.includes('rate')){ meta.Rate = value; parsedCount++; }
-          else if(key.includes('made')){ meta.MadeBy = value; parsedCount++; }
-          else if(key.includes('special')){ meta.SpecialID = value; parsedCount++; }
-          else if(key === 'name' || key.includes('name')){ meta.Name = value; parsedCount++; }
-          else if(key.includes('description') || key.includes('desc')){ meta.Description = value; parsedCount++; }
+          if(key.includes('rate') && !meta.Rate){ meta.Rate = value; parsedCount++; }
+          else if(key.includes('made') && !meta.MadeBy){ meta.MadeBy = value; parsedCount++; }
+          else if(key.includes('special') && !meta.SpecialID){ meta.SpecialID = value; parsedCount++; }
+          else if(key === 'name' || key.includes('name')){ if(!meta.Name){ meta.Name = value; parsedCount++; } }
+          else if(key.includes('description') || key.includes('desc')){ if(!meta.Description){ meta.Description = value; parsedCount++; } }
         }
       }
 
-      // fallback: if any missing, try searching anywhere in first 20 lines
+      // fallback search in first 20 lines
       if(!meta.Name || !meta.Description){
         for(let idx=0; idx<Math.min(lines.length, 20); idx++){
           const raw = lines[idx].trim();
@@ -343,35 +362,81 @@
         }
       }
 
-      // Element creation
       const el = document.createElement('article');
       el.className = 'card';
-      // build a neat HTML block with metadata
-      el.innerHTML = `
-        <h3>${escapeHtml(meta.Name || filename)}</h3>
-        <span class="badge">Other</span>
-        <pre class="code">${escapeHtml(downloadUrl)}</pre>
-        <div class="row">
-          <button class="btn success" title="Copy file URL" onclick="copyToClipboard('${escapeAttribute(downloadUrl)}')">Copy URL</button>
-          <button class="btn" title="Download file" onclick="downloadFile('${escapeAttribute(filename)}', '${escapeAttribute(downloadUrl)}')">Download</button>
-        </div>
-        <p class="credit"><strong>Rate:</strong> ${escapeHtml(meta.Rate || 'Unknown')} &nbsp; â€¢ &nbsp; <strong>Made by:</strong> ${escapeHtml(meta.MadeBy || 'Unknown')}</p>
-        <p class="credit"><strong>Special ID:</strong> ${escapeHtml(meta.SpecialID || 'â€”')}</p>
-        <p style="color:var(--muted); margin-top:6px;"><strong>Description:</strong> ${escapeHtml(meta.Description || 'No description')}</p>
-      `;
+
+      const title = meta.Name || filename;
+      const rate = meta.Rate || 'Unknown';
+      const madeBy = meta.MadeBy || 'Unknown';
+      const specialId = meta.SpecialID || 'None';
+      const description = meta.Description || 'No description';
+
+      // build content safely using text nodes and sanitized elements
+      const h3 = document.createElement('h3');
+      h3.textContent = title;
+      el.appendChild(h3);
+
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.textContent = 'Other';
+      el.appendChild(badge);
+
+      const pre = document.createElement('pre');
+      pre.className = 'code';
+      pre.textContent = downloadUrl;
+      el.appendChild(pre);
+
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'btn success';
+      copyBtn.title = 'Copy file URL';
+      copyBtn.textContent = 'Copy URL';
+      copyBtn.addEventListener('click', function(){ copyText(downloadUrl); });
+      row.appendChild(copyBtn);
+
+      const dlBtn = document.createElement('button');
+      dlBtn.className = 'btn';
+      dlBtn.title = 'Download file';
+      dlBtn.textContent = 'Download';
+      dlBtn.addEventListener('click', function(){ downloadFileByUrl(filename, downloadUrl); });
+      row.appendChild(dlBtn);
+
+      el.appendChild(row);
+
+      const p1 = document.createElement('p');
+      p1.className = 'credit';
+      p1.textContent = 'Rate: ' + rate + ' - Made by: ' + madeBy;
+      el.appendChild(p1);
+
+      const p2 = document.createElement('p');
+      p2.className = 'credit';
+      p2.textContent = 'Special ID: ' + specialId;
+      el.appendChild(p2);
+
+      const p3 = document.createElement('p');
+      p3.style.color = 'var(--muted)';
+      p3.style.marginTop = '6px';
+      p3.textContent = 'Description: ' + description;
+      el.appendChild(p3);
+
       grid.appendChild(el);
     }
 
-    // simple HTML escape for security / display safety
-    function escapeHtml(s){ if(!s && s!==0) return ''; return String(s).replace(/[&<>"']/g, function(m){ return ({'&':'&','<':'<','>':'>','"':'&quot;',"'":'&#39;'})[m]; }); }
-    function escapeAttribute(s){ return escapeHtml(s).replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+    // initial fetch and hook refresh button
+    document.addEventListener('DOMContentLoaded', function(){
+      const refresh = document.getElementById('refresh-other');
+      refresh.addEventListener('click', fetchOther);
+      // wire plugin area buttons (dataset approach used in HTML)
+      // buttons with data-url and data-download-url are handled via the global click listener above
+      fetchOther();
+    });
 
-    // initial fetch on load
-    document.addEventListener('DOMContentLoaded', ()=> { fetchOther(); });
-
-    // small audio load error handling
-    const bgAudio = document.getElementById('bg-music');
-    if(bgAudio){ bgAudio.addEventListener('error', ()=> showToast('Audio failed to load')); }
+    // error toast if audio fails to load
+    if(bgAudio){
+      bgAudio.addEventListener('error', function(){ showToast('Audio failed to load'); });
+    }
   </script>
 </body>
 </html>
