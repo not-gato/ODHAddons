@@ -1,6 +1,7 @@
 -- Rate: Safe
 -- Made By: not_.gato
 -- Special ID: tYbVq_01
+-- Name: Minecraftizer
 -- Description: Minecrafts Your Game :content:
 
 local shared = odh_shared_plugins
