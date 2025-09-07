@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Overdrive H Plugins</title>
+  <title>ODH Plugins</title>
   <style>
     :root{
       --bg1:#0b0f14;
@@ -16,6 +16,11 @@
       --accent:#66ffc4;
       --radius:18px;
       --shadow:0 10px 30px rgba(0,0,0,.45);
+      --gold: #ffd700;
+      --gold-text: #000000;
+      --safe: #28a745;
+      --unsafe: #e74c3c;
+      --yellow: #f1c40f;
     }
 
     /* page base */
@@ -57,7 +62,7 @@
     @media(min-width:1040px){ .card{ grid-column:span 4; } }
 
     .card h3{ margin:0; font-size:18px; }
-    .badge{ font-size:12px; color:var(--muted); border:1px dashed rgba(255,255,255,.15); padding:2px 8px; border-radius:999px; align-self:flex-start; }
+    .badge{ font-size:12px; color:var(--muted); border:1px dashed rgba(255,255,255,.15); padding:2px 8px; border-radius:999px; align-self:flex-start; display:inline-block; }
     .credit{ font-size:13px; color:var(--muted); }
     .code{ background:#0e1420; border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:10px; font-family:ui-monospace,monospace; font-size:12.5px; overflow:auto; word-break:break-word; color:var(--text); }
 
@@ -82,6 +87,17 @@
     #music-reopen button{ border-radius:999px; padding:10px 12px; border:1px solid rgba(255,255,255,.08); background:rgba(15,21,32,0.95); color:var(--text); cursor:pointer; box-shadow:var(--shadow); }
 
     .other-loader { color:var(--muted); font-size:14px; }
+
+    .badge-row{ display:flex; align-items:center; gap:8px; margin-top:8px; flex-wrap:wrap; }
+
+    /* rate badge styles (solid colors override dashed badge) */
+    .rate-badge{ padding:4px 8px; border-radius:999px; font-size:12px; border:0; color:var(--text); box-shadow:0 6px 18px rgba(0,0,0,0.35); display:inline-block; }
+    .rate-featured { background: var(--gold); color: var(--gold-text); }
+    .rate-safe { background: var(--safe); color: #ffffff; }
+    .rate-obfuscated { background: var(--yellow); color: #000000; }
+    .rate-loadstring { background: var(--yellow); color: #000000; }
+    .rate-unsafe { background: var(--unsafe); color: #ffffff; }
+    .rate-unknown { background: rgba(255,255,255,.06); color: var(--muted); border:1px dashed rgba(255,255,255,.08); }
 
     @media(max-width:440px){ .music-popup{ width:92%; left:4%; right:4%; bottom:14px; } #music-reopen{ right:12px; bottom:12px; } }
   </style>
@@ -322,6 +338,18 @@
       }
     }
 
+    // helper: create a normalized slug for rate class
+    function rateSlug(rate){
+      if(!rate) return 'unknown';
+      const s = String(rate).trim().toLowerCase();
+      if(s.includes('feature') || s.includes('gold')) return 'featured';
+      if(s.includes('safe') || s === 'green') return 'safe';
+      if(s.includes('obfus') || s.includes('obfuscated')) return 'obfuscated';
+      if(s.includes('load') || s.includes('loadstring')) return 'loadstring';
+      if(s.includes('unsafe') || s === 'red') return 'unsafe';
+      return 'unknown';
+    }
+
     // render single file's card
     async function renderOtherFile(file, grid){
       const downloadUrl = file.download_url;
@@ -366,7 +394,7 @@
       el.className = 'card';
 
       const title = meta.Name || filename;
-      const rate = meta.Rate || 'Unknown';
+      const rate = (meta.Rate || '').trim();
       const madeBy = meta.MadeBy || 'Unknown';
       const specialId = meta.SpecialID || 'None';
       const description = meta.Description || 'No description';
@@ -376,10 +404,23 @@
       h3.textContent = title;
       el.appendChild(h3);
 
+      // badge row: Other + Rate badge
+      const badgeRow = document.createElement('div');
+      badgeRow.className = 'badge-row';
       const badge = document.createElement('span');
       badge.className = 'badge';
       badge.textContent = 'Other';
-      el.appendChild(badge);
+      badgeRow.appendChild(badge);
+
+      const slug = rateSlug(rate);
+      const rateBadge = document.createElement('span');
+      rateBadge.className = 'rate-badge rate-' + slug;
+      rateBadge.setAttribute('title', rate || 'Unknown');
+      rateBadge.setAttribute('aria-label', 'Rate: ' + (rate || 'Unknown'));
+      rateBadge.textContent = rate || 'Unknown';
+      badgeRow.appendChild(rateBadge);
+
+      el.appendChild(badgeRow);
 
       const pre = document.createElement('pre');
       pre.className = 'code';
@@ -407,7 +448,7 @@
 
       const p1 = document.createElement('p');
       p1.className = 'credit';
-      p1.textContent = 'Rate: ' + rate + ' - Made by: ' + madeBy;
+      p1.textContent = 'Made by: ' + madeBy;
       el.appendChild(p1);
 
       const p2 = document.createElement('p');
@@ -423,17 +464,13 @@
 
       grid.appendChild(el);
     }
-
-    // initial fetch and hook refresh button
+    
     document.addEventListener('DOMContentLoaded', function(){
       const refresh = document.getElementById('refresh-other');
       refresh.addEventListener('click', fetchOther);
-      // wire plugin area buttons (dataset approach used in HTML)
-      // buttons with data-url and data-download-url are handled via the global click listener above
       fetchOther();
     });
-
-    // error toast if audio fails to load
+    
     if(bgAudio){
       bgAudio.addEventListener('error', function(){ showToast('Audio failed to load'); });
     }
