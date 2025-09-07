@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ODH Plugins</title>
+  <title>Overdrive H Plugins</title>
+  <meta property="og:title" content="Overdrive H Plugins" />
+  <meta property="og:description" content="Your Trusted Website For Overdrive H Plugins" />
+  <meta property="og:image" content="https://yourdomain.com/preview.png" />
+  <meta property="og:url" content="https://yourdomain.com" />
+  <meta name="twitter:card" content="summary_large_image" />
   <style>
     :root{
       --bg1:#0b0f14;
@@ -22,8 +27,6 @@
       --unsafe: #e74c3c;
       --yellow: #f1c40f;
     }
-
-    /* page base */
     html,body{
       margin:0;
       padding:0;
@@ -35,62 +38,46 @@
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
-
     a{ color:var(--brand); text-decoration:none; }
     a:hover{text-decoration:underline;}
-
     .site-header{ position:sticky; top:0; z-index:50; backdrop-filter:blur(10px); background:rgba(11,15,20,.8); border-bottom:1px solid rgba(255,255,255,.06); }
     .wrap{ max-width:1100px; margin:0 auto; padding:0 20px; }
     .nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
     .brand{ display:flex; align-items:center; gap:12px; font-weight:700; }
     .brand img.logo{ width:32px; height:32px; border-radius:8px; box-shadow:var(--shadow); object-fit:cover; }
-
     .nav a.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:rgba(110,168,255,.15); border:1px solid rgba(255,255,255,.08); transition:background .2s ease; color:var(--text); }
     .nav a.btn:hover{ background:rgba(110,168,255,.3); }
-
     .hero{ padding:64px 0 40px; text-align:center; }
     .h1{ font-size:clamp(28px,5vw,46px); margin:18px auto 12px; line-height:1.12; font-weight:800; }
     .h1 .gradient { background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color: transparent; color:transparent; }
     .sub{ max-width:720px; margin:0 auto; color:var(--muted); font-size:16px; word-break:normal; }
     .down{ margin-top:36px; display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; background: linear-gradient(135deg, rgba(102,255,196,.15), rgba(110,168,255,.15)); border:1px solid rgba(255,255,255,.08); color:var(--text); }
-
     .section{ padding:56px 0; }
     .section h2{ font-size:clamp(22px,4vw,32px); margin:0 0 18px; color:var(--text); }
     .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:18px; }
     .card{ grid-column:span 12; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; display:flex; flex-direction:column; gap:14px; word-break:break-word; overflow-wrap:break-word; }
     @media(min-width:720px){ .card{ grid-column:span 6; } }
     @media(min-width:1040px){ .card{ grid-column:span 4; } }
-
     .card h3{ margin:0; font-size:18px; }
     .badge{ font-size:12px; color:var(--muted); border:1px dashed rgba(255,255,255,.15); padding:2px 8px; border-radius:999px; align-self:flex-start; display:inline-block; }
     .credit{ font-size:13px; color:var(--muted); }
     .code{ background:#0e1420; border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:10px; font-family:ui-monospace,monospace; font-size:12.5px; overflow:auto; word-break:break-word; color:var(--text); }
-
     .row{ display:flex; gap:10px; flex-wrap:wrap; }
     .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0f1520; color:var(--text); cursor:pointer; transition:transform .1s ease; }
     .btn:hover{ transform:translateY(-1px); }
     .btn.primary{ background:rgba(110,168,255,.25); }
     .btn.success{ background:rgba(102,255,196,.18); }
-
     .toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:18px; padding:10px 14px; border-radius:999px; background:#0f1520; border:1px solid rgba(255,255,255,.1); box-shadow:var(--shadow); display:none; color:var(--text); }
-
     footer{ padding:24px; text-align:center; font-size:13px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); }
-
-    /* Music player popup */
     .music-popup{ position:fixed; bottom:20px; right:20px; background:rgba(15,21,32,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:16px; box-shadow:0 8px 25px rgba(0,0,0,0.4); padding:12px 16px; z-index:9999; width:280px; display:flex; flex-direction:column; gap:8px; }
     .music-header{ display:flex; justify-content:space-between; align-items:center; font-size:14px; color:var(--muted); margin-bottom:6px; }
     .close-btn{ background:transparent; border:none; color:var(--text); font-size:18px; cursor:pointer; }
     .close-btn:hover{ color:var(--accent); }
     .music-popup audio{ width:100%; }
-
     #music-reopen{ position:fixed; bottom:20px; right:20px; display:none; z-index:9998; }
     #music-reopen button{ border-radius:999px; padding:10px 12px; border:1px solid rgba(255,255,255,.08); background:rgba(15,21,32,0.95); color:var(--text); cursor:pointer; box-shadow:var(--shadow); }
-
     .other-loader { color:var(--muted); font-size:14px; }
-
     .badge-row{ display:flex; align-items:center; gap:8px; margin-top:8px; flex-wrap:wrap; }
-
-    /* rate badge styles (solid colors override dashed badge) */
     .rate-badge{ padding:4px 8px; border-radius:999px; font-size:12px; border:0; color:var(--text); box-shadow:0 6px 18px rgba(0,0,0,0.35); display:inline-block; }
     .rate-featured { background: var(--gold); color: var(--gold-text); }
     .rate-safe { background: var(--safe); color: #ffffff; }
@@ -98,7 +85,6 @@
     .rate-loadstring { background: var(--yellow); color: #000000; }
     .rate-unsafe { background: var(--unsafe); color: #ffffff; }
     .rate-unknown { background: rgba(255,255,255,.06); color: var(--muted); border:1px dashed rgba(255,255,255,.08); }
-
     @media(max-width:440px){ .music-popup{ width:92%; left:4%; right:4%; bottom:14px; } #music-reopen{ right:12px; bottom:12px; } }
   </style>
 </head>
@@ -122,7 +108,6 @@
       <p><a class="down" href="#plugins" title="View plugins">View Plugins</a></p>
     </section>
 
-    <!-- Plugins -->
     <section id="plugins" class="section" aria-labelledby="plugins-title">
       <div class="wrap">
         <h2 id="plugins-title">Plugins</h2>
@@ -137,7 +122,6 @@
             </div>
             <p class="credit">Made by <strong>b6o6s</strong></p>
           </article>
-
           <article class="card">
             <h3>Gato's Addon Pack</h3>
             <span class="badge">Raw GitHub</span>
@@ -148,7 +132,6 @@
             </div>
             <p class="credit">Made by <strong>not_.gato</strong></p>
           </article>
-
           <article class="card">
             <h3>Addon Pack</h3>
             <span class="badge">Raw GitHub</span>
@@ -163,7 +146,6 @@
       </div>
     </section>
 
-    <!-- Other (dynamic) -->
     <section id="other" class="section" aria-labelledby="other-title">
       <div class="wrap">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:12px;">
@@ -179,7 +161,6 @@
     </section>
   </main>
 
-  <!-- Music player popup (no special characters) -->
   <div id="music-popup" class="music-popup" role="region" aria-label="Music player">
     <div class="music-header">
       <span>Now Playing</span>
@@ -191,7 +172,6 @@
     </audio>
   </div>
 
-  <!-- Reopen button -->
   <div id="music-reopen" aria-hidden="true">
     <button id="music-open">Music</button>
   </div>
@@ -204,7 +184,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // small helpers
     function showToast(msg){
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -213,7 +192,6 @@
       window.__toastTimer = setTimeout(()=>{ t.style.display='none'; }, 2200);
     }
 
-    // copy function used by buttons (uses dataset to avoid inline JS)
     async function copyText(text){
       if(!text) return showToast('Nothing to copy');
       if(navigator.clipboard && window.isSecureContext){
@@ -236,7 +214,6 @@
       }
     }
 
-    // download helper
     async function downloadFileByUrl(filename, url){
       try{
         const res = await fetch(url, { mode:'cors' });
@@ -256,7 +233,6 @@
       }
     }
 
-    // wire up plugin copy/download buttons (no inline onclick)
     document.addEventListener('click', function(e){
       const t = e.target;
       if(t.matches('button[data-url]')){
@@ -266,7 +242,6 @@
       }
     });
 
-    // Music popup controls
     const musicPopup = document.getElementById('music-popup');
     const musicReopen = document.getElementById('music-reopen');
     const musicCloseBtn = document.getElementById('music-close');
@@ -277,7 +252,6 @@
       musicPopup.style.display = 'none';
       musicReopen.style.display = 'block';
       musicReopen.setAttribute('aria-hidden','false');
-      // audio element remains in DOM and continues playing
     });
     musicOpenBtn.addEventListener('click', function(){
       musicPopup.style.display = 'flex';
@@ -285,7 +259,6 @@
       musicReopen.setAttribute('aria-hidden','true');
     });
 
-    // unmute on first user gesture
     document.addEventListener('click', function onceUnmute(){
       if(bgAudio && bgAudio.muted){
         bgAudio.muted = false;
@@ -294,7 +267,6 @@
       document.removeEventListener('click', onceUnmute);
     });
 
-    // fetch "Other" folder files and parse first 5 lines for metadata
     async function fetchOther(){
       const grid = document.getElementById('other-grid');
       grid.innerHTML = '<div class="card other-loader">Loading files from repository...</div>';
@@ -313,7 +285,6 @@
           return;
         }
         grid.innerHTML = '';
-        // limit concurrency
         const concurrency = 6;
         let i = 0;
         async function worker(){
@@ -338,7 +309,6 @@
       }
     }
 
-    // helper: create a normalized slug for rate class
     function rateSlug(rate){
       if(!rate) return 'unknown';
       const s = String(rate).trim().toLowerCase();
@@ -350,7 +320,6 @@
       return 'unknown';
     }
 
-    // render single file's card
     async function renderOtherFile(file, grid){
       const downloadUrl = file.download_url;
       const filename = file.name;
@@ -376,7 +345,6 @@
         }
       }
 
-      // fallback search in first 20 lines
       if(!meta.Name || !meta.Description){
         for(let idx=0; idx<Math.min(lines.length, 20); idx++){
           const raw = lines[idx].trim();
@@ -399,12 +367,10 @@
       const specialId = meta.SpecialID || 'None';
       const description = meta.Description || 'No description';
 
-      // build content safely using text nodes and sanitized elements
       const h3 = document.createElement('h3');
       h3.textContent = title;
       el.appendChild(h3);
 
-      // badge row: Other + Rate badge
       const badgeRow = document.createElement('div');
       badgeRow.className = 'badge-row';
       const badge = document.createElement('span');
